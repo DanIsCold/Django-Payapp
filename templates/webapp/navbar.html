@@ -1,0 +1,58 @@
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">WebApps2024</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
+                    
+                    {% if user.is_staff %}
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register_admin' %}">Admin Registration</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/webapps2024/logout">Logout</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Welcome, Admin {{user.username}}</a>
+                        </li>
+                        
+                        {% else %}
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/webapps2024/home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/webapps2024/payapp/make_payment">Make Payment</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/webapps2024/payapp/request_payment">Request Payment</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/webapps2024/logout">Logout</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Welcome, {{user.username}}</a>
+                        </li>
+                        
+                    {% endif %}
+
+                {% else %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/webapps2024/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/webapps2024/register">Register</a>
+                    </li>
+
+                {% endif %}
+            </ul>
+        </div>
+    </nav>

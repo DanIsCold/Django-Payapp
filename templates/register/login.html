@@ -1,0 +1,18 @@
+{% extends 'webapp/base.html' %}
+{% csrf_token %}
+{% load crispy_forms_filters %}
+
+{% block title %}
+    Account Login
+{% endblock %}
+
+{% block content %}
+    <h1>Login</h1>
+    <form method="post" class="form-group">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-success">Login</button>
+    </form>
+    <p class="text-center">Don't have an account? <a href="/webapps2024/register">Create an account</a>.</p>
+    <p class="text-center">Site admin? <a href="/webapps2024/administrator/login">Login here</a>.</p>
+{% endblock %}

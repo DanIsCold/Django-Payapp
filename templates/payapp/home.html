@@ -1,0 +1,82 @@
+{% extends 'webapp/base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>Welcome, {{ request.user.username }}</h1>
+    <p>Your current balance is {{ balance }} {{ currency }}.</p>
+
+    <h2>Payment Requests</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>From</th>
+                <th>Request Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in payment_requests %}
+                <tr>
+                    <td>{{ request.requester.username }}</td>    
+                    <td>{{ request.sentAmount }} {{ request.sentCurrency }}</td>
+                    <td>
+                        <form method="post" action="{% url 'handle_payment_request' request.id %}">
+                            {% csrf_token %}
+                            <button type="submit" name="action" value="accept" class="btn btn-success btn-sm">Send</button>
+                            <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Deny</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <br>
+
+    <h2>Previous Outgoing Transactions</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>From</th>
+                <th>To</th>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in sent_transactions %}
+                <tr>
+                    <td>{{ transaction.sender.username }}</td>
+                    <td>{{ transaction.recipient.username }}</td>
+                    <td>{{ transaction.sentAmount }} {{ transaction.sentCurrency }}</td>
+                    <td>{{ transaction.timestamp }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+
+    <h2>Previous Incoming Transactions</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>From</th>
+            <th>To</th>
+            <th>Amount</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for transaction in received_transactions %}
+            <tr>
+                <td>{{ transaction.sender.username }}</td>
+                <td>{{ transaction.recipient.username }}</td>
+                <td>{{ transaction.receiveAmount }} {{ transaction.receiveCurrency }}</td>
+                <td>{{ transaction.timestamp }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

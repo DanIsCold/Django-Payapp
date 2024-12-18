@@ -1,0 +1,79 @@
+{% extends 'webapp/base.html' %}
+
+{% block content %}
+    <h1>Admin Dashboard</h1>
+
+    <form method="get">
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    
+    <br>
+
+    <h2>Sent Transactions</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Recipient</th>
+            <th>Amount</th>
+            <th>Timestamp</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for transaction in transactions_sent %}
+            <tr>
+                <td>{{ transaction.recipient.username }}</td>
+                <td>{{ transaction.sentAmount }} {{ transaction.sentCurrency }}</td>
+                <td>{{ transaction.timestamp }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    <br>
+
+    <h2>Received Transactions</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Sender</th>
+            <th>Amount</th>
+            <th>Timestamp</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for transaction in transactions_received %}
+            <tr>
+                <td>{{ transaction.sender.username }}</td>
+                <td>{{ transaction.receiveAmount }} {{ transaction.receiveCurrency }}</td>
+                <td>{{ transaction.timestamp }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    <br>
+
+    <h2>All Users</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Date Joined</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.date_joined }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

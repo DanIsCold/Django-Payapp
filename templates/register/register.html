@@ -1,0 +1,18 @@
+{% extends 'webapp/base.html' %}
+{% csrf_token %}
+{% load crispy_forms_filters %}
+
+{% block title %}
+    Register Account
+{% endblock %}
+
+{% block content %}
+    <h1>Register</h1>
+    <p>Please fill in the information below to create your account. The base amount of £1000 will be credited to your account. If you select a currency other than GBP, this amount will be converted accordingly.</p>
+    <form method="post" class="form-group">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-success">Register</button>
+    </form>
+    <p class="text-center">Already have an account? <a href="/webapps2024/login">Login Instead</a>.</p>
+{% endblock %}
